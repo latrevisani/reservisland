@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create_table_config" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Table CONFIG exists">
+            <not>
+                <tableExists tableName="CONFIG"/>
+            </not>
+        </preConditions>
+        <createTable tableName="CONFIG">
+            <column name="ID_CONFIG" type="number(19)" remarks="Table PK">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="CONFIG_PK" />
+            </column>
+            <column name="KEY" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="VALUE" type="VARCHAR2(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_index_config_idx01" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Index CONFIG_IDX01 exists">
+            <not>
+                <indexExists tableName="CONFIG" indexName="CONFIG_IDX01" columnNames="KEY"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="CONFIG" indexName="CONFIG_IDX01">
+            <column name="KEY" />
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

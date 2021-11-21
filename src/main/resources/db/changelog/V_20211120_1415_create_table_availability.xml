@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create_sequence_availability" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Sequence SQ_AVAILABILITY_ID exists">
+            <not>
+                <sequenceExists sequenceName="SQ_AVAILABILITY_ID"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="SQ_AVAILABILITY_ID" />
+    </changeSet>
+
+    <changeSet id="create_table_availability" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Table AVAILABILITY exists">
+            <not>
+                <tableExists tableName="AVAILABILITY"/>
+            </not>
+        </preConditions>
+        <createTable tableName="AVAILABILITY">
+            <column name="ID_AVAILABILITY" type="number(19)" remarks="Table PK">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="AVAILABILITY_PK" />
+            </column>
+            <column name="DATE" type="TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="RESERVATIONS" type="number(6)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_index_availability_idx01" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Index AVAILABILITY_IDX01 exists">
+            <not>
+                <indexExists tableName="AVAILABILITY" indexName="AVAILABILITY_IDX01" columnNames="DATE"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="AVAILABILITY" indexName="AVAILABILITY_IDX01">
+            <column name="DATE" />
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

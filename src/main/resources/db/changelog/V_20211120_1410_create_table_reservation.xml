@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create_sequence_reservation" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Sequence SQ_RESERVATION_ID exists">
+            <not>
+                <sequenceExists sequenceName="SQ_RESERVATION_ID"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="SQ_RESERVATION_ID" />
+    </changeSet>
+
+    <changeSet id="create_table_reservation" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Table RESERVATION exists">
+            <not>
+                <tableExists tableName="RESERVATION"/>
+            </not>
+        </preConditions>
+        <createTable tableName="RESERVATION">
+            <column name="ID_RESERVATION" type="number(19)" remarks="Table PK">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="RESERVATION_PK" />
+            </column>
+            <column name="ID_VISITOR" type="number(19)" remarks="FK Visitor">
+                <constraints nullable="false" foreignKeyName="id_visitor_fk" referencedTableName="VISITOR" referencedColumnNames="ID_VISITOR" />
+            </column>
+            <column name="BOOKING_ID" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ARRIVAL_DATE" type="TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="DEPARTURE_DATE" type="TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_index_reservation_idx01" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Index RESERVATION_IDX01 exists">
+            <not>
+                <indexExists tableName="RESERVATION" indexName="RESERVATION_IDX01" columnNames="BOOKING_ID"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="RESERVATION" indexName="RESERVATION_IDX01">
+            <column name="BOOKING_ID" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="create_index_reservation_idx02" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Index RESERVATION_IDX02 exists">
+            <not>
+                <indexExists tableName="RESERVATION" indexName="RESERVATION_IDX02" columnNames="ARRIVAL_DATE,DEPARTURE_DATE"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="RESERVATION" indexName="RESERVATION_IDX02">
+            <column name="ARRIVAL_DATE" />
+            <column name="DEPARTURE_DATE" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="create_index_reservation_idx03" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Index RESERVATION_IDX03 exists">
+            <not>
+                <indexExists tableName="RESERVATION" indexName="RESERVATION_IDX03" columnNames="ID_VISITOR"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="RESERVATION" indexName="RESERVATION_IDX03">
+            <column name="ID_VISITOR" />
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

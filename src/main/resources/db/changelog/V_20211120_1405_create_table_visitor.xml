@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create_sequence_visitor" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Sequence SQ_VISITOR_ID exists">
+            <not>
+                <sequenceExists sequenceName="SQ_VISITOR_ID"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="SQ_VISITOR_ID" />
+    </changeSet>
+
+    <changeSet id="create_table_visitor" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Table VISITOR exists">
+            <not>
+                <tableExists tableName="VISITOR"/>
+            </not>
+        </preConditions>
+        <createTable tableName="VISITOR">
+            <column name="ID_VISITOR" type="number(19)" remarks="Table PK">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VISITOR_PK" />
+            </column>
+            <column name="EMAIL" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="FULLNAME" type="VARCHAR2(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_index_visitor_idx01" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Index VISITOR_IDX01 exists">
+            <not>
+                <indexExists tableName="VISITOR" indexName="VISITOR_IDX01" columnNames="EMAIL,FULLNAME"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="VISITOR" indexName="VISITOR_IDX01">
+            <column name="EMAIL" />
+            <column name="FULLNAME" />
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

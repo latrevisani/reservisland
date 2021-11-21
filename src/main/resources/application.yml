@@ -1,0 +1,32 @@
+server:
+  port: '8099'
+
+logging:
+  level:
+    ROOT: INFO
+
+spring:
+  application:
+    name: reservisland
+  datasource:
+    url: jdbc:h2:file:~/data/reservisland;MODE=Oracle
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+    liquibase:
+      jdbcUrl: jdbc:h2:file:~/data/reservisland;MODE=Oracle
+      username: sa
+      password:
+      driverClassName: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: none
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  liquibase:
+    enabled: true
+    changeLog: classpath:db/database-changelog.xml
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="insert_configs" author="luis">
+        <preConditions onFail="MARK_RAN" onFailMessage="Config exists">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(1) FROM CONFIG WHERE KEY = 'MAX_OCCUPATION'
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="CONFIG">
+            <column name="ID_CONFIG" value="1"/>
+            <column name="KEY" value="MAX_OCCUPATION"/>
+            <column name="VALUE" value="10"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
