@@ -1,0 +1,20 @@
+apply plugin: "org.sonarqube"
+apply plugin: "org.ajoberstar.grgit"
+
+sonarqube {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.login", "b93190b2767381f490c8e2a68d8f4729f88c4cfd"
+        property "sonar.projectName", "${rootProject.projectName}"
+        property "sonar.projectKey", "${rootProject.projectName}"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+        property "sonar.coverage.exclusions", [
+                "**/reservisland/business/dto/*",
+                "**/business/exception/*",
+                "src/main/java/com/example/reservisland/config/**",
+                "src/main/java/com/example/reservisland/domain/entity/**",
+                "src/main/java/com/example/reservisland/domain/repository/**"
+        ]
+    }
+}

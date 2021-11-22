@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.6.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'jacoco'
+	id 'org.sonarqube' version '3.3'
 }
 
 group = 'com.example'
@@ -38,3 +40,11 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+}
+
+project.tasks["sonarqube"].dependsOn "jacocoTestReport"

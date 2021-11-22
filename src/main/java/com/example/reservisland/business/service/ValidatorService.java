@@ -54,6 +54,10 @@ public class ValidatorService {
         var maximumOccupation = configService.getMaximumOccupation();
         var availability = availabilityService.findAvailabilityByDate(from, to);
 
+        if (!(availability.size() >= from.until(to, ChronoUnit.DAYS) && from.equals(availability.get(0).getDate()))) {
+            throw new InvalidBookingException("The campsite is not available in the period.");
+        }
+
         if (availability.stream().anyMatch(available -> available.getReservations() >= maximumOccupation)) {
             throw new InvalidBookingException("The campsite is fully occupied in the period.");
         }
